@@ -1,5 +1,21 @@
+import Homepage from "./pages/Homepage";
+import {BrowserRouter as Router,  Routes, Route} from "react-router-dom";
+import Storepage from "./pages/Storepage";
+import Product from "./pages/Product";
+import Politics from "./pages/Politics";
+import Register from "./pages/Register";
+
 const App = () => {
-  return <div>Hello world!</div>;
+  return (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Homepage/>}/>
+      <Route path="/tienda" element={<Storepage/>} />
+      <Route path="/tienda/:producto_id" element={<Product/>} />
+      <Route path="/envios-y-politicas" element={<Politics/>} />
+      <Route path="/registro" element={<Register/>} />
+    </Routes>
+  </Router>);
 };
 
 export default App;
