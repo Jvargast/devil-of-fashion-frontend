@@ -208,14 +208,13 @@ export const FaqQuestions = [
 export const Dummy = [
     {
         id:1,
-        img: product_2,
-    }, 
-    {
-        id:2,
-        img: product_2,
+        img: [product_2, product_1, product_2],
+        title:"POLERO SOUCHI",
+        category: "Categoria",
+        description:"loremipsum",
+        price:"15990",
+        sizes:["XL","L","S"]
     },
-    {
-        id:3,
-        img: product_2,
-    }
+    
+
 ]

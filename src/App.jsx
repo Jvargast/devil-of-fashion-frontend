@@ -3,7 +3,9 @@ import {BrowserRouter as Router,  Routes, Route} from "react-router-dom";
 import Storepage from "./pages/Storepage";
 import Product from "./pages/Product";
 import Politics from "./pages/Politics";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Loginv2 from "./pages/Loginv2";
 
 const App = () => {
   return (
@@ -13,7 +15,11 @@ const App = () => {
       <Route path="/tienda" element={<Storepage/>} />
       <Route path="/tienda/:producto_id" element={<Product/>} />
       <Route path="/envios-y-politicas" element={<Politics/>} />
+      <Route path="/iniciar-sesion" element={<Login/>} />
       <Route path="/registro" element={<Register/>} />
+
+
+      <Route path="/sign-in" element={<Loginv2/>} />
     </Routes>
   </Router>);
 };

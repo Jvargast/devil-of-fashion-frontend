@@ -142,7 +142,7 @@ const NavBar = () => {
                     </MenuContainer>
                 <MenuLogoContainer>
                     <MenuLogo>
-                        <a href='/registro'> 
+                        <a href='/iniciar-sesion'> 
                             <ProfileIcon src={df09} />
                         </a>
                     </MenuLogo>
