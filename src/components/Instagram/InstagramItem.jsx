@@ -1,7 +1,7 @@
 import React from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 
-const Container = styledComponents.div`
+const Container = styled.div`
     flex: 1;
     margin: 10px;
     height: 400px;
@@ -9,9 +9,13 @@ const Container = styledComponents.div`
     &:hover{
         transform: scale(1.05);
     }
+
+  @media screen and (max-width: 768px) {
+   height: 200px;
+  }
 `;
 
-const Image = styledComponents.img`
+const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;

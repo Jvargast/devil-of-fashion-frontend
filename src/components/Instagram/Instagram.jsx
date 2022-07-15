@@ -1,11 +1,11 @@
 import React from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 import df10 from '../../assets/DF-10.png';
 import { instagram } from "../../data"; 
 import InstagramItem from "./InstagramItem";
 
 
-const Container = styledComponents.div`
+const Container = styled.div`
   background-color: #1D1D1B;
   width: 100%;
 
@@ -15,34 +15,38 @@ const Container = styledComponents.div`
    
 }
 `;
-const Header = styledComponents.div`
+const Header = styled.div`
   display: flex;
   justify-content: center;
   flex: 1;
   height: 120px;
 `;
 
-const TitleContainer = styledComponents.div`
+const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const Title = styledComponents.h1`
+const Title = styled.h1`
   font-size: 60px;
   color: #fff;
+
+  @media screen and (max-width: 768px) {
+   font-size: 40px;
+  }
 `;
 
-const IconContainer = styledComponents.div`
+const IconContainer = styled.div`
   margin-left: 20px;
 `;
 
-const Icon = styledComponents.img`
+const Icon = styled.img`
   width: 60px;
   height: 60px;
 `;
 
-const InstagramContainer = styledComponents.div`
+const InstagramContainer = styled.div`
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -51,10 +55,19 @@ const InstagramContainer = styledComponents.div`
   margin-right: 100px;
   margin-bottom: 20px;
   margin-top: 20px;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+
+    grid-template-columns: repeat(3, 0.5fr);
+  }
 `;
 
 
-const ButtonContainer = styledComponents.div`
+const ButtonContainer = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
@@ -62,7 +75,7 @@ const ButtonContainer = styledComponents.div`
   margin-bottom: 50px;
 `;
 
-const Button = styledComponents.div`
+const Button = styled.div`
   color: #fff;
   font-size: 30px;
   padding: 10px;

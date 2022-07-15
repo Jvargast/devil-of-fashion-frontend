@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
-import NavBar from '../components/NavBar';
 import Header from '../components/Store/Header/Header';
 import CustomNavbar from '../components/Store/SecondNavbar/CustomNavbar';
 
@@ -38,7 +37,6 @@ const Product = ({product}) => {
   
   return (
     <Container>
-        <NavBar/>
         <Header title="TIENDA"/>
         {/* Bar for the product, it changes when the category is display and the product */}
         <CustomNavbar category="POLERAS" subcategory="ANIME"/>

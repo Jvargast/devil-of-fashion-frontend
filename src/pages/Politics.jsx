@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import ContentPolitics from '../components/ContentPolitics';
 import Footer from '../components/Footer';
-import NavBar from '../components/NavBar';
 import Header from '../components/Store/Header/Header';
 import ReactPlayer from 'react-player';
 import Faq from '../components/FaQ/Faq';
@@ -93,23 +92,22 @@ const LastQuestion = styled.div`
 const Politics = () => {
   return (
     <Container>
-        <NavBar/>
         <Header title="ENVIOS Y POLÍTICAS"/>
         <PoliticContainer>
             <Title>
             ANTES DE COMPRAR DEBES TENER EN CONSIDERACIÓN LO SIGUIENTE:
             </Title>
             <Content>
-                {politics.map((item) => (
-			    <ContentPolitics item={item}></ContentPolitics>
+                {politics.map((item, i) => (
+			        <ContentPolitics key ={i} item={item}></ContentPolitics>
                  ))}
             </Content>
             <Title>
                 PAGOS POR MEDIO DE TRANSFERENCIA:
             </Title>
             <Content>
-                {payments.map((item) => (
-			    <ContentPolitics item={item}></ContentPolitics>
+                {payments.map((item,i) => (
+			        <ContentPolitics key={i} item={item}></ContentPolitics>
                  ))}
             </Content>
             <RememberContainer>

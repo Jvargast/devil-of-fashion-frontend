@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
+
 import Header from "../components/Store/Header/Header";
 
 import Form from "../components/Form/Form";
@@ -12,7 +12,6 @@ const Login = () => {
   };
   return (
     <>
-      <NavBar />
       <Header title="MI CUENTA" />
       <Form
         title={"INICIO DE SESIÓN"}

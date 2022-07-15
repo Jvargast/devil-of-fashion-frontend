@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styledComponents from "styled-components";
+import styled from "styled-components";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Link } from 'react-router-dom';
 
 
 
-const Container = styledComponents.div`
+const Container = styled.div`
     width: 100%;
     display: flex;
     background-color: #1D1D1B;
@@ -13,7 +14,7 @@ const Container = styledComponents.div`
     overflow: hidden;
 `;
 
-const Arrow = styledComponents.div`
+const Arrow = styled.div`
     width: 50px;
     height: 50px;
     background-color: transparent;
@@ -31,14 +32,14 @@ const Arrow = styledComponents.div`
     opacity: 0.5;
     z-index: 2;
 `;
-const Wrapper = styledComponents.div`
+const Wrapper = styled.div`
     height:100%;
     display: flex;
     transition: all 1.5s ease;
 
 `;
 
-const Slide = styledComponents.div`
+const Slide = styled.div`
     width: 100vw;
     height: auto;
     display: flex;
@@ -46,13 +47,13 @@ const Slide = styledComponents.div`
     position: relative;
 `;
 
-const ImgContainer = styledComponents.div`
+const ImgContainer = styled.div`
     height: 100%;
     width: 100%;
     flex: 1;
 `;
 
-const Image = styledComponents.img`
+const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -62,7 +63,7 @@ const Image = styledComponents.img`
         opacity: 1;
     }
 `;
-const InfoContainer = styledComponents.div`
+const InfoContainer = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -77,7 +78,7 @@ const InfoContainer = styledComponents.div`
 `;
 
 
-const Button = styledComponents.button`
+const Button = styled.button`
     padding: 10px;
     font-size: 24px;
     background-color: transparent;
@@ -92,8 +93,9 @@ const Carousel = (props) => {
 
   
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(props.images[0]);
+  const [selectedImage, setSelectedImage] = useState(props.images[0].url);
   const [selectedInfo, setSelectedInfo] = useState(props.info[0]);
+  const [selectedId, setSelectedId] = useState(props.images[0].id);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedMarginLeft, setSelectedMarginLeft] = useState("");
   const [selectedMarginTop, setSelectedMarginTop] = useState("");
@@ -115,18 +117,19 @@ const Carousel = (props) => {
     setTimeout(() => {
         const condition = next ? selectedIndex < images.length -1 && info.length -1: selectedIndex > 0;
         const nextIndex =  next ? (condition ? selectedIndex + 1 : 0) : condition ? selectedIndex - 1 : images.length - 1 && info.length -1;
-        setSelectedImage(images[nextIndex]);
+        setSelectedImage(images[nextIndex].url);
         setSelectedInfo(info[nextIndex]);
+        setSelectedId(images[nextIndex].id);
         setSelectedIndex(nextIndex);
-        if (images[nextIndex]==="DF-03.png") {
+        if (images[nextIndex].url==="DF-03.png") {
             setSelectedColor("gray");
             setSelectedMarginLeft("0px");
             setSelectedMarginTop("312px");
-        } else if(images[nextIndex]==="DF-02.png"){
+        } else if(images[nextIndex].url==="DF-02.png"){
             setSelectedColor("white");
             setSelectedMarginLeft("960px");
             setSelectedMarginTop("-200px");
-        } else if(images[nextIndex]==="DF-04.png") {
+        } else if(images[nextIndex].url==="DF-04.png") {
             setSelectedColor("black");
             setSelectedMarginLeft("1007px");
             setSelectedMarginTop("-10px");
@@ -134,7 +137,7 @@ const Carousel = (props) => {
             setSelectedColor("black");
             setSelectedMarginLeft("0px");
             setSelectedMarginTop("0px");
-        }
+        } 
     }, 500);    
   }
   const previus = () => {
@@ -156,11 +159,12 @@ const Carousel = (props) => {
         
             <Slide>
                 <ImgContainer>
-                    <Image src={require(`../assets/images/${selectedImage}`).default} alt="df" className={loaded ? "loaded" : ""} onLoad={()=> setLoaded(true)} />
+                        <Image src={require(`../assets/images/${selectedImage}`).default} alt="df" className={loaded ? "loaded" : ""} onLoad={()=> setLoaded(true)} />
                 </ImgContainer>
                 <InfoContainer>
-                    
-                    <Button style={{color:selectedColor, marginLeft:selectedMarginLeft, marginTop:selectedMarginTop}}>{selectedInfo}</Button>
+                    <Link to={`/${selectedId}`}> 
+                        <Button style={{color:selectedColor, marginLeft:selectedMarginLeft, marginTop:selectedMarginTop}}>{selectedInfo}</Button>
+                    </Link>
                 </InfoContainer>
             </Slide>
    

@@ -16,11 +16,11 @@ const FaqItem = () => {
   
   return (
     <Container>
-        {FaqQuestions.map((ans)=>{
+        {FaqQuestions.map((ans, i)=>{
 
         return (
         <>
-            <Accordion {...ans}/>
+            <Accordion key={i} {...ans} />
             
         </>
         )})}

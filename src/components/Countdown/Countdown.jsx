@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 import moment, {duration}from 'moment';
 
-const Container = styledComponents.div`
+const Container = styled.div`
     grid-area: countdown;
     display: grid;
     grid-template-columns: repeat(4, minmax(50px, 170px));
@@ -10,11 +10,15 @@ const Container = styledComponents.div`
     grid-gap: 10px;
     justify-content: center;
 
+    @media screen and (max-width: 768px) {
+        grid-template-columns: repeat(4, minmax(50px, 75px));
+    }
+
     
     
 `;
 
-const Segment = styledComponents.section`
+const Segment = styled.section`
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 1fr;
@@ -27,34 +31,47 @@ const Segment = styledComponents.section`
         border-right: 2px solid #e1251b;
     }
 
-    @media (max-width: 500px) {
+    /* @media (max-width: 500px) {
         border-bottom: 5px solid #e1251b;
         &:not(:last-child){
             border-right: 0px;
         }
+    } */
+
+    @media screen and (max-width: 768px) {
+        width: 67px;
+        height: 67px;
     }
 `;
 
-const Wrapper = styledComponents.div`
+const Wrapper = styled.div`
     justify-content: center;
     justify-items: center;
 `;
 
-const Number = styledComponents.span`
+const Number = styled.span`
     font-size: 50px;
     transition: all 0.2s ease-in;
     &:hover{
         transform: scale(1.1);
     }
+
+    @media screen and (max-width: 768px) {
+        font-size: 25px;
+    }
     
 `;
 
-const Caption = styledComponents.span`
+const Caption = styled.span`
     display: grid;
     justify-content: center;
     justify-items: center;  
     margin-top: 20px;
     font-size: 20px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 12px;
+    }
 `;
 
 export default class Countdown extends Component {
@@ -112,7 +129,7 @@ export default class Countdown extends Component {
     return (
       <Container>
           {Object.keys(this.state).map((key,i) => (
-              <Wrapper>
+              <Wrapper key={i}>
                   <Segment>
                     <Number>
                       {this.addZeros(this.state[key])}

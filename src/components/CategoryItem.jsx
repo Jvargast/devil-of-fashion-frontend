@@ -4,7 +4,7 @@ import styledComponents from "styled-components";
 const Container = styledComponents.div`
     flex: 1;
     margin: 10px;
-    height: 50vh;
+    height: 400px;
     position: relative;
 
     &:nth-child(5) {
@@ -15,6 +15,11 @@ const Container = styledComponents.div`
     &:hover{
         transform: scale(1.05);
     }
+
+    @media screen and (max-width: 768px) {
+        height: 150px;
+    }
+
 `
 const Image = styledComponents.img`
     width: 100%;
@@ -38,6 +43,11 @@ const Info = styledComponents.div`
 const Title = styledComponents.h1`
     margin-bottom: 20px;
     font-size: 62px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 40px;
+    }
+
 `
 const SubTitle = styledComponents.p`
     color: #fff;

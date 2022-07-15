@@ -1,25 +1,23 @@
 import React from 'react'
-import Announcement from '../components/Announcement'
+/* import Announcement from '../components/Announcement' */
 import Carousel from '../components/Carousel'
 import Categories from '../components/Categories'
 import ComingSoon from '../components/ComingSoon'
 import Footer from '../components/Footer'
 import Instagram from '../components/Instagram/Instagram'
-import NavBar from '../components/NavBar'
 
 
 const Homepage = () => {
-  const images = ['DF-01.png','DF-02.png','DF-03.png', 'DF-04.png'];
+  const images = [{url:'DF-01.png', id:1},{url:'DF-02.png', id:2},{url:'DF-03.png', id:3}, {url:'DF-04.png', id:4}];
   const info = ['VER MÁS', 'VER MÁS', 'COMPRAR AHORA', 'VER MÁS'];
   return (
     <div>
-        <Announcement/>
-        <NavBar/>
+        {/* <Announcement/> */}
         <Carousel images={images} autoPlay={true} info={info}/>
         <Categories/>
-        <ComingSoon/>
-        <Instagram/>
-        <Footer/>
+        <ComingSoon/> 
+        <Instagram/> 
+        <Footer/> 
     </div>
   )
 }

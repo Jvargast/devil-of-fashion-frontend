@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 import Countdown from './Countdown/Countdown'
 
 
-const Container = styledComponents.div`
+const Container = styled.div`
     width: 100%;
-    height: 50vh;
+    /* height: 50vh; */
     display: grid;
     justify-items: center;
     grid-template-columns: 1fr;
@@ -20,12 +20,16 @@ const Container = styledComponents.div`
     
 `;
 
-const Title = styledComponents.h1`
+const Title = styled.h1`
     font-size: 60px;
     grid-area: title;
+
+    @media screen and (max-width: 768px) {
+        font-size: 40px;
+    }
 `;
 
-const Subtitle = styledComponents.h2`
+const Subtitle = styled.h2`
     margin-top: 40px;
     border-bottom: 2px solid #e3e3e3; 
     

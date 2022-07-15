@@ -5,18 +5,21 @@ import df09 from '../assets/DF-09.png'
 import df11 from '../assets/DF-11.png';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import df from '../assets/Df_Logo_2.png';
+import {FaBars} from 'react-icons/fa';
 
 const Container = styled.div`
     height:100px;
     background-color: #1D1D1B;
-    flex-direction: row;
+    flex-direction: row; 
+    z-index: 10;
 `
-const Wrapper = styled.div`
+const Wrapper = styled.nav`
     padding: 10px 20px;
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: center;
+
 `
 const Left = styled.div`
     flex: 1;
@@ -24,6 +27,10 @@ const Left = styled.div`
     align-items: center;
     text-align: center;
     justify-content: space-evenly;
+
+    @media screen and (max-width: 768px){
+        display: none;
+    }
 
     
 `
@@ -58,6 +65,10 @@ const Right = styled.div`
     align-items: center;
     flex-direction: row;
     justify-content: flex-end;
+
+    @media screen and (max-width: 768px){
+        display: none;
+    }
 `
 
 const MenuContainer = styled.div`
@@ -115,10 +126,27 @@ const NavLink = styled(Link)`
         
     }
 `;
+//Responsive with bars
+const Bars = styled(FaBars)`
+    display: none;
+    color: #fff;
+
+    @media screen and (max-width: 768px) {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(-100%, 75%);
+        font-size: 1.8rem;
+        cursor: pointer;
+    }
+`;
+
 
 const NavBar = () => {
   return (
     <Container>
+        <Bars/>
         <Wrapper>
             <Left>
                 <Item>
