@@ -9,7 +9,7 @@ import {FaBars} from 'react-icons/fa';
 
 const Container = styled.div`
     height:100px;
-    background-color: #1D1D1B;
+    background-color: #000000;
     flex-direction: row; 
     z-index: 10;
 `
