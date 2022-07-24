@@ -31,7 +31,7 @@ const LinkProduct = styled(Link)`
 
 `;
 
-const CustomNavbar = ({category, subcategory}) => {
+const CustomNavbar = ({category, subcategory, name}) => {
   return (
     <StoreRoute>
             <SingleRoute>
@@ -51,7 +51,7 @@ const CustomNavbar = ({category, subcategory}) => {
                 </IconContainer>
             </SingleRoute>
             <SingleRoute>
-                <LinkProduct to="/tienda">
+                <LinkProduct to={`/tienda/${category}`}>
                     {category}
                 </LinkProduct>
                 <IconContainer>
@@ -59,15 +59,15 @@ const CustomNavbar = ({category, subcategory}) => {
                 </IconContainer>
                 </SingleRoute>
             <SingleRoute>
-                <LinkProduct to="/tienda">
+                <LinkProduct to={`/tienda/${category}/${subcategory}`}>
                     {subcategory}
                 </LinkProduct>
                 <IconContainer>
                     <ChevronRightIcon/>
                 </IconContainer>
                 </SingleRoute>
-            <SingleRoute>
-                JUNJI ITO
+            <SingleRoute aria-disabled>
+                {name}
                 </SingleRoute>
         </StoreRoute>
   )

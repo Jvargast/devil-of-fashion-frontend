@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 
@@ -24,21 +24,19 @@ const Images = styled.img`
     border: 1px solid lightskyblue;
   }
 `;
-export class Thumbs extends Component {
-  render() {
-    const {images, tab, myRef} = this.props;
+export const Thumbs =({images,tab,myRef})=> {
     return (
         <RestOfImages ref={myRef} className="thumb">
         {images.map((tipos, index) => (
           <Images
-            src={tipos}
+            src={tipos.url}
             key={index}
             onClick={()=>tab(index)}
           />
         ))}
       </RestOfImages>
     )
-  }
 }
+
 
 export default Thumbs

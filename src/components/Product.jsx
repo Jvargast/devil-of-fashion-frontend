@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ReactStars from "react-rating-stars-component";
 
 const Container = styled.div`
   margin: 10px;
@@ -104,14 +103,6 @@ const Button = styled(Link)`
 
 
 const Product = ({ item }) => {
-  const options = {
-    edit:false,
-    color: "#ded1d1d6",
-    activeColor: "tomato",
-    value:item.ratings,
-    size: window.innerWidth < 600 ? 20: 25,
-    isHalf:true
-  }
   return (
     <Container>
         <ImageContainer>
@@ -128,9 +119,7 @@ const Product = ({ item }) => {
         <Info>
           <Title>{item.name} </Title>
           <Price>{item.price} </Price>
-          <ReactStars {...options}/> 
-          <span>{item.numrOfReviews ? item.numrOfReviews: 0} comentarios</span> 
-          <Button to={item._id}>VER MÁS</Button>
+          <Button to={`/producto/${item._id}`}>VER MÁS</Button>
         </Info>
     </Container>
   );

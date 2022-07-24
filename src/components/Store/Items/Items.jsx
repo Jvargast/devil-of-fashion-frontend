@@ -76,12 +76,6 @@ const FilterText = styled.span`
   }
 `;
 
-const Buttons = styled.div`
-  grid-area: 5 / 1 / 6 / 4;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-`;
 
 const treeData = [
   {
@@ -195,6 +189,7 @@ const Items = () => {
 
   const handleVisible = () => {
     setVisible(!visible);
+    //MANDAR AL BACKEND EL ESTADO ACTIVO PARA EL CAMBIO DE PÁGINA 9:12
   };
 
   return (
@@ -222,8 +217,7 @@ const Items = () => {
             </FilterWithIcon>
           </Container>
         )}
-        <Products style={visible}/>
-        <Buttons>{"<1  2 3 4 5 ... >"}</Buttons>
+        <Products style={visible} visible={visible}/>
       </FilterContainer>
     </ItemContainer>
   );

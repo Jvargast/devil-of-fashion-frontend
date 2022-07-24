@@ -1,10 +1,21 @@
-import React, { Component } from "react";
-import { Dummy } from "../../../data";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Thumbs from "./Thumbs";
+
+//Redux
+import { useSelector, useDispatch } from "react-redux";
+import { clearErrors, getProductDetails } from "../../../actions/productActions";
+import { useParams } from "react-router-dom";
+
+//Skeleton
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
+//alerta
+import { useAlert } from "react-alert";
 
 const InfoContainer = styled.div`
   width: 800px;
@@ -12,7 +23,7 @@ const InfoContainer = styled.div`
 `;
 
 const ImgWrapper = styled.div`
-    /* overflow: hidden; */
+  /* overflow: hidden; */
 `;
 
 const Second = styled.div`
@@ -27,18 +38,21 @@ const ImgContainer = styled.div`
 `;
 
 const FirstImage = styled.div`
-  width: 500px;
-  height: 450px;
+  /* width: 500px; */
+  height: 100%;
+  width: 100vw;
+  box-sizing: border-box;
+  max-width: 100%;
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   object-fit: cover;
   display: block;
+  max-width: 100%;
+  box-sizing: border-box;
 `;
-
-
 
 const Title = styled.h1`
   color: #fff;
@@ -117,6 +131,7 @@ const Button = styled.button`
   justify-content: center;
   height: 35px;
   width: 170px;
+  padding: 5px;
   &:hover {
     background-color: gray;
   }
@@ -136,75 +151,136 @@ const BackToStore = styled.button`
   cursor: pointer;
 `;
 
-export class ProductsDetails extends Component {
-  state = { Dummy ,index:0};
+const ProductsDetails = (props) => {
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const { id } = useParams();
 
-  myRef = React.createRef();
+  const { product, loading, error } = useSelector(
+    (state) => state.productDetails
+  );
 
-  handleTab = (index) => {
-    this.setState({index:index});
-    /* const images = this.myRef.current.children;
-    for(let i=0; i<images.length; i++){
-      images[i].className = images[i].className.replace("active", "");
+  useEffect(() => {
+    if(error) {
+      alert.error(error);
+      dispatch(clearErrors());
     }
-    images[index].className = "active"; */
+    dispatch(getProductDetails(id));
+  }, [alert, dispatch, error, id]);
+
+  
+
+  
+
+  const [index, setIndex] = useState(0);
+  const myRef = useRef(null);
+
+  const handleTab = (index) => {
+    setIndex(index);
   };
 
-  /* componentDidMount(){
-    const {index} = this.state;
-    this.myRef.current.children[index].className = "active";
-  } */
-
-  render() {
-    const { Dummy,index } = this.state;
+  //Skeleton
+  const Loader = () => {
     return (
-      <>
-        {Dummy.map((item, i) => (
-          <Second key={i}>
-            <ImgWrapper key={item.id}>
-              <ImgContainer>
-                <FirstImage>
-                  <Image src={item.img[index]} alt="first image" />
-                </FirstImage>
-              </ImgContainer>
-              <Thumbs images={item.img} tab={this.handleTab} myRef={this.myRef}/>
-            </ImgWrapper>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <SubTitle>{item.description}</SubTitle>
-              <Price>${item.price}</Price>
-              <FilterContainer>
-                <Filter>
-                  <FilterTitle>Talla</FilterTitle>
-                  <FilterSize>
-                    <FilterSizeOption>M</FilterSizeOption>
-                    <FilterSizeOption>L</FilterSizeOption>
-                    <FilterSizeOption>XL</FilterSizeOption>
-                  </FilterSize>
-                </Filter>
-              </FilterContainer>
-              <AddContainer>
-                <AmountContainer>
-                  <RemoveIcon />
-                  <Amount> 1</Amount>
-                  <AddIcon />
-                </AmountContainer>
-
-                <Button>
-                  <ShoppingBagIcon />
-                  Añadir al carro
-                </Button>
-                <Button>Comprar ahora</Button>
-              </AddContainer>
-              <BackContainer>
-                <BackToStore>VOLVER A TIENDA</BackToStore>
-              </BackContainer>
-            </InfoContainer>
-          </Second>
-        ))}
-      </>
+      <SkeletonTheme baseColor="#8e1414" highlightColor="black">
+        <Second>
+          <ImgWrapper>
+            <ImgContainer>
+              <FirstImage>
+                <Skeleton height={400} style={{ marginBottom: "10px" }} />
+              </FirstImage>
+            </ImgContainer>
+            {product.images && <Skeleton height={200} />}
+          </ImgWrapper>
+          <InfoContainer>
+            <Title>
+              <Skeleton />
+            </Title>
+            <SubTitle>
+              <Skeleton />
+            </SubTitle>
+            <Price>
+              <Skeleton />
+            </Price>
+            <FilterContainer>
+              <Filter>
+                <FilterTitle>{<Skeleton />}</FilterTitle>
+              </Filter>
+            </FilterContainer>
+            <p style={{ color: "white", marginBottom: "10px" }}>
+              <Skeleton />
+            </p>
+            <Skeleton />
+            <BackContainer>
+              <Skeleton />
+            </BackContainer>
+          </InfoContainer>
+        </Second>
+      </SkeletonTheme>
     );
-  }
-}
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Second category={product.category} sub={product.subCategory}>
+          <ImgWrapper>
+            <ImgContainer>
+              <FirstImage>
+                {product.images && (
+                  <Image src={product.images[index].url} alt="first image" />
+                )}
+              </FirstImage>
+            </ImgContainer>
+            {product.images && (
+              <Thumbs images={product.images} tab={handleTab} myRef={myRef} />
+            )}
+          </ImgWrapper>
+          <InfoContainer>
+            <Title>{product.name}</Title>
+            <SubTitle>{product.description}</SubTitle>
+            <Price>${product.price}</Price>
+            <FilterContainer>
+              <Filter>
+                <FilterTitle>Talla</FilterTitle>
+                <FilterSize>
+                  <FilterSizeOption>M</FilterSizeOption>
+                  <FilterSizeOption>L</FilterSizeOption>
+                  <FilterSizeOption>XL</FilterSizeOption>
+                </FilterSize>
+              </Filter>
+            </FilterContainer>
+            <p style={{ color: "white", marginBottom: "10px" }}>
+              Estado:
+              {product.stock < 1 ? (
+                <b style={{ color: "red" }}>&nbsp;Sin stock</b>
+              ) : (
+                <b style={{ color: "green" }}>&nbsp;En stock</b>
+              )}
+            </p>
+            <AddContainer>
+              <AmountContainer>
+                <RemoveIcon />
+                <Amount> 1</Amount>
+                <AddIcon />
+              </AmountContainer>
+
+              <Button>
+                <ShoppingBagIcon />
+                Añadir al carro
+              </Button>
+              <Button>Comprar ahora</Button>
+            </AddContainer>
+            <BackContainer>
+              <BackToStore>VOLVER A TIENDA</BackToStore>
+            </BackContainer>
+          </InfoContainer>
+        </Second>
+      )}
+    </>
+  );
+};
 
 export default ProductsDetails;
