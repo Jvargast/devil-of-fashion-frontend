@@ -6,9 +6,17 @@ import Politics from "./pages/Politics";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavBar from "./components/NavBar";
+import Acoount from "./pages/Acoount";
+import {store} from './store/store';
+import { useEffect } from "react";
+import { loadUser } from "./actions/userActions";
 
 
 const App = () => {
+
+  useEffect(()=> {
+    store.dispatch(loadUser());
+  },[])
   return (
   <Router>
     <NavBar/>
@@ -19,7 +27,7 @@ const App = () => {
       <Route path="/producto/:id" element={<Product/>} />
       <Route path="/envios-y-politicas" element={<Politics/>} />
       <Route path="/iniciar-sesion" element={<Login/>} />
-      {/* <Route path="/registro" element={<Register/>} /> */}
+      <Route path="/cuenta" element={<Acoount/>} />
       <Route path="/registro" element={<Register/>} />
     </Routes>
   </Router>);

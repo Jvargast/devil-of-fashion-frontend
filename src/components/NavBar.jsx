@@ -6,12 +6,18 @@ import df11 from '../assets/DF-11.png';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import df from '../assets/Df_Logo_2.png';
 import {FaBars} from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import ProfileDeploy from './Store/Header/ProfileDeploy';
 
 const Container = styled.div`
     height:100px;
     background-color: #000000;
     flex-direction: row; 
     z-index: 10;
+    width: 100%;
+    /* position: fixed; */
 `
 const Wrapper = styled.nav`
     padding: 10px 20px;
@@ -142,8 +148,25 @@ const Bars = styled(FaBars)`
     }
 `;
 
+const ModalContainer = styled.div`
+    /* width: 200px; */
+    height: 100vh;
+    background-color: #000;
+    z-index: 30;
+    top: 0;
+    position: relative;
+    left: 1000px;
+    margin-top:-90px;
+`;
 
 const NavBar = () => {
+  const {isAuthenticated, user} = useSelector((state)=> state.user);
+  const [open, setOpen] = useState(false);
+
+  
+  const handleShopping = () => {
+    setOpen(true);
+  }
   return (
     <Container>
         <Bars/>
@@ -169,20 +192,31 @@ const NavBar = () => {
                     </MenuItem>
                     </MenuContainer>
                 <MenuLogoContainer>
-                    <MenuLogo>
+                    {/*agregar desplegable para opciones usuario <MenuLogo>
+                        <a href='/cuenta'> 
+                            <ProfileIcon src={df09} />
+                        </a>
+                    </MenuLogo>*/}
+                    {isAuthenticated ? <>
+                    <ProfileDeploy user={user}/>
+                    </>:<MenuLogo>
                         <a href='/iniciar-sesion'> 
                             <ProfileIcon src={df09} />
                         </a>
-                    </MenuLogo>
+                    </MenuLogo>}
+                    
                     <MenuLogo>
                         <InstagramIcon style={{fontSize:"40px"}}/>
                     </MenuLogo>
                     <MenuLogo>
-                        <ShoppingBag src={df11}/>
+                        <ShoppingBag src={df11} onClick={handleShopping}/>
                     </MenuLogo>
                 </MenuLogoContainer>
             </Right>
         </Wrapper>
+        {open ? <ModalContainer>
+            <CloseIcon style={{color:"white"}} onClick={()=> setOpen(false)}/>
+        </ModalContainer>:<></>}
     </Container>
   )
 }

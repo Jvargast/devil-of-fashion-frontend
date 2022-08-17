@@ -82,7 +82,6 @@ const Products = ({ style, visible }) => {
     setCurrentPage(e)
   }
 
-
   useEffect(() => {
     if(error) {
       alert.error(error);
@@ -122,7 +121,7 @@ const Products = ({ style, visible }) => {
             
         </Container>
       )}
-      {resultPerPage  &&  (<PaginationBox className="">
+      {resultPerPage &&  (<PaginationBox className="">
               <Pagination 
               activePage={currentPage}
               itemsCountPerPage={resultPerPage}

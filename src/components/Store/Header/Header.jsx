@@ -5,7 +5,7 @@ import tienda_imagen from '../../../assets/Identificador_1.png';
 
 const Container = styledComponent.div`
   width: 100vw;
-  height: 20vh;
+  height: 30vh;
   display: flex;
   align-items: center;
   position: relative;

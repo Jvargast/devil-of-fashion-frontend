@@ -56,7 +56,7 @@ const Search = () => {
   const searchSubmitHandler = (e) => {
     e.preventDefault();
     if(keyword.trim()) {
-        navigate(`${keyword}`);
+        navigate(`/tienda/${keyword}`);
         setKeyword("");
     } else {
         navigate(`/tienda`)

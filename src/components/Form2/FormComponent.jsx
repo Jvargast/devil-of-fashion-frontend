@@ -11,7 +11,7 @@ import {
   Redirect,
   RedirectLink,
 } from "./Elements";
-import axios from "axios";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -19,6 +19,8 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { register } from "../../actions/userActions";
 
 const FormComponent = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,12 +30,12 @@ const FormComponent = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const EMAIL_REGEX =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const REGISTER_URL = "/register";
+  
 
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
@@ -50,14 +52,15 @@ const FormComponent = () => {
   const [matchFocus, setMatchFocus] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [USER_REGEX, user]);
+    setValidName(USER_REGEX.test(username));
+  }, [USER_REGEX, username]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -70,21 +73,30 @@ const FormComponent = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, email, pwd, matchPwd]);
+  }, [username, email, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
+    const v1 = USER_REGEX.test(username);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = EMAIL_REGEX.test(email);
     if (!v1 || !v2 || !v3) {
       setErrMsg("Invalid Entry");
       return;
     }
-    console.log(user,pwd,email);
+    const myForm = new FormData();
+    myForm.set("username", username);
+    myForm.set("email", email);
+    myForm.set("password", pwd);
+
+    dispatch(register(myForm));
     setSuccess(true);
-    try {
+    setUsername("");
+    setEmail("");
+    setPwd("");
+    setMatchPwd("");
+    /* try {
       const response = await axios.post(
         REGISTER_URL,
         JSON.stringify({ user, pwd }),
@@ -112,7 +124,7 @@ const FormComponent = () => {
         setErrMsg("Registration Failed");
       }
       errRef.current.focus();
-    } 
+    }  */
   };
 
   return (
@@ -139,7 +151,7 @@ const FormComponent = () => {
                 />
                 <FontAwesomeIcon
                   icon={faTimes}
-                  className={validName || !user ? "hide" : "invalid"}
+                  className={validName || !username ? "hide" : "invalid"}
                 />
               </Label>
               <Input
@@ -147,8 +159,8 @@ const FormComponent = () => {
                 id="username"
                 ref={userRef}
                 autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
                 required
                 aria-invalid={validName ? "false" : "true"}
                 aria-describedby="uidnote"
@@ -159,7 +171,7 @@ const FormComponent = () => {
               <p
                 id="uidnote"
                 className={
-                  userFocus && user && !validName ? "instructions" : "offscreen"
+                  userFocus && username && !validName ? "instructions" : "offscreen"
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} />
