@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Product from "./Product";
 
@@ -64,12 +64,10 @@ const PaginationBox = styled.div`
   }
 `;
 
-const Products = ({ style, visible }) => {
+const Products = ({ style, visible, limit, setCurrentPageNo, currentPage }) => {
   
 
   //Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-
   const { loading, error, products, productsCount, resultPerPage } = useSelector(
     (state) => state.products
   );
@@ -77,18 +75,15 @@ const Products = ({ style, visible }) => {
   const dispatch = useDispatch();
   const {keyword} = useParams();
 
-  console.log(resultPerPage)
-  const setCurrentPageNo = (e) => {
-    setCurrentPage(e)
-  }
+  
 
   useEffect(() => {
     if(error) {
       alert.error(error);
       dispatch(clearErrors())
     }
-    dispatch(getProduct(keyword,currentPage));
-  }, [alert, currentPage, dispatch, error, keyword]);
+    dispatch(getProduct(keyword,currentPage, limit));
+  }, [alert, currentPage, dispatch, error, keyword, limit]);
 
   const Loader = () => {
     return (
@@ -111,8 +106,8 @@ const Products = ({ style, visible }) => {
       ) : (
         <Container
           style={{
-            gridTemplateColumns: style ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
-            gridTemplateRows: style ? "repeat(3,1fr)" : "repeat(4,1fr)",
+            gridTemplateColumns: style ? "repeat(3, 0.4fr)" : "repeat(4, 0.4fr)",
+            gridTemplateRows: style ? "" : "",
           }}
         >
           {products &&

@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Tree from "../Collapsible/Tree";
 import Products from "../../Products";
-import dwi from "../../../assets/down-icon.svg";
+/* import dwi from "../../../assets/down-icon.svg"; */
 import { useState } from "react";
+import Sidebar from "./Sidebar";
+import { useDispatch } from "react-redux";
+import { getProductsSort } from "../../../actions/productActions";
+import { useEffect } from "react";
 
 const ItemContainer = styled.div`
   background-color: #1d1d1d;
@@ -12,7 +15,7 @@ const ItemContainer = styled.div`
 const FilterContainer = styled.div`
   display: grid;
   //set style
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0fr 2fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   background-color: #1d1d1b;
@@ -21,31 +24,14 @@ const FilterContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-
+  height: 100vh;
+  transition: transform 0.2s;
 `;
-
-const FilterWithIcon = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: #e3e3e3;
-  cursor: pointer;
-  background-color: #1d1d1b;
-`;
-
-const Category = styled.div`
-  display: flex;
-  margin-left: 20px;
-  margin-top: 40px;
-  font-size: 24px;
-  justify-content: center;
-  text-align: center;
-`;
-
 
 
 const Filters = styled.div`
   padding-top: 40px;
-  
+
   background-color: #1d1d1d;
   width: 100%;
 `;
@@ -63,161 +49,106 @@ const FilterText = styled.span`
   cursor: pointer;
   color: #fff;
 
+  select {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 20px;
+      :focus {
+        outline: none;
+      }
+    }
 
   img {
-    filter: invert(100%) sepia(13%) saturate(0%) hue-rotate(314deg) brightness(101%) contrast(103%);
+    filter: invert(100%) sepia(13%) saturate(0%) hue-rotate(314deg)
+      brightness(101%) contrast(103%);
     margin-right: 3px;
     transform: rotate(180deg);
 
     &::after {
       transform: rotate(45deg);
     }
+
     
   }
 `;
 
+const Chv = styled.i`
+  cursor: pointer;
+  transition: ${(props) => (props.completed ? "." : "transform .3s")};
+  transform: ${(props) =>
+    props.completed ? "rotate(180deg)" : "rotate(0deg)"};
+`;
 
-const treeData = [
-  {
-    key: "0",
-    label: "POLERAS",
-    icon: "fa fa-folder",
-    title: "Documents Folder",
-    children: [
-      {
-        key: "0-0",
-        label: "ANIME",
-        icon: "fa fa-folder",
-        title: "Documents Folder",
-        children: [
-          {
-            key: "0-1-1",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-2",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-3",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-4",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-5",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-6",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-7",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-8",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-          {
-            key: "0-1-9",
-            label: "Tokyo Revengers",
-            icon: "fa fa-file",
-            title: "Documents Folder",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: "1",
-    label: "POLERONES",
-    icon: "fa fa-desktop",
-    title: "Desktop Folder",
-    children: [
-      {
-        key: "1-0",
-        label: "Categoria poleron 1",
-        icon: "fa fa-file",
-        title: "Documents Folder",
-      },
-      {
-        key: "0-0",
-        label: "Categoria poleron 2",
-        icon: "fa fa-file",
-        title: "Documents Folder",
-      },
-    ],
-  },
-  {
-    key: "2",
-    label: "TOTEBAGS",
-    icon: "fa fa-download",
-    title: "Downloads Folder",
-    children: [],
-  },
-  {
-    key: "3",
-    label: "A PEDIDO",
-    icon: "fa fa-download",
-    title: "Downloads Folder",
-    children: [],
-  },
-];
 
 const Items = () => {
   const [visible, setVisible] = useState(true);
+  const [limit, setLimit] = useState(9);
+  const dispatch = useDispatch();
 
   const handleVisible = () => {
     setVisible(!visible);
-    //MANDAR AL BACKEND EL ESTADO ACTIVO PARA EL CAMBIO DE PÁGINA 9:12
+    if (visible) {
+      setLimit(12);
+    } else {
+      setLimit(9);
+    }
+  };
+  const dummyData = [
+    "Ordenar por últimos subidos",
+    "Ordenar por precio: alto - bajo",
+    "Ordenar por precio: bajo - alto"
+  ];
+
+  const [optionState, setOptionState] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChange = (e) => {
+    setOptionState(e.target.value);
   };
 
+  useEffect(()=> {
+    if(optionState === "Ordenar por precio: bajo - alto") {
+      dispatch(getProductsSort(currentPage, limit, "+price"))
+    } else if(optionState === "Ordenar por precio: alto - bajo") {
+      dispatch(getProductsSort(currentPage, limit, "-price"))
+    } else {
+      dispatch(getProductsSort(currentPage, limit, "-createdAt"))
+    }
+  },[currentPage, dispatch, limit, optionState])
+
+  
+  const setCurrentPageNo = (e) => {
+    setCurrentPage(e)
+  }
+  
   return (
     <ItemContainer>
       <Filters>
         <Filter>
           <FilterText onClick={handleVisible}>
-            <img src={dwi} alt="dwi" />
-            Mostrar Filtros
+            <Chv className="bx bxs-down-arrow" completed={visible}></Chv>
+            <span>Mostrar Filtros</span>
           </FilterText>
           <FilterText>
-            <img src={dwi} alt="dwi" />
-            Ordenar por más vendidos
+            {/* <img src={dwi} alt="dwi" /> */}
+            <select onChange={(e)=>handleChange(e)} value={optionState}>
+              {dummyData.map((elemento, index) => (
+                <option key={index}>{elemento}</option>
+              ))}
+            </select>
           </FilterText>
         </Filter>
       </Filters>
 
-      <FilterContainer >
+      <FilterContainer>
         {visible && (
           <Container>
-            <FilterWithIcon>
-              <Category>
-                <Tree data={treeData} />
-              </Category>
-            </FilterWithIcon>
+            <Sidebar/>
           </Container>
         )}
-        <Products style={visible} visible={visible}/>
+        <Products style={visible} visible={visible} limit={limit} setCurrentPageNo={setCurrentPageNo} currentPage={currentPage}/>
       </FilterContainer>
     </ItemContainer>
   );

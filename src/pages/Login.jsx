@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Footer from "../components/Footer";
 
 import Header from "../components/Store/Header/Header";
 
@@ -37,7 +36,7 @@ const Login = () => {
       {loading ? (
         <div></div>
       ) : (
-        <>
+        <div style={{paddingTop:"95px"}}>
           <Header title="MI CUENTA" />
           <Form
             title={"INICIO DE SESIÓN"}
@@ -52,9 +51,8 @@ const Login = () => {
               },
             }}
           />
-        </>
+        </div>
       )}
-      <Footer />
     </>
   );
 };

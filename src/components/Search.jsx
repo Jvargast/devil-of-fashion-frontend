@@ -31,7 +31,8 @@ const InputSearch = styled.input`
 const InputSubmit = styled.input`
     
     border-radius: 0%;
-    background-color: tomato;
+    background-color: #e1251b;
+    color: #000;
     padding: 1vmax;
     width: 10%;
     font: 300 1.1vmax;
@@ -43,8 +44,8 @@ const InputSubmit = styled.input`
     align-items: center;
 
     &:hover {
-        background-color: blue;
-        color:white
+        background-color: #000;
+        color:#fff
     }
 `;
 
@@ -73,7 +74,7 @@ const Search = () => {
             placeholder="Buscar producto"
             onChange={(e)=>setKeyword(e.target.value)}
             />
-            <InputSubmit type="submit" value="Search"/>
+            <InputSubmit type="submit" value="Buscar"/>
         </Form>
     </>
   )

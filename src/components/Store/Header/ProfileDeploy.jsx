@@ -12,11 +12,6 @@ const ProfileIcon = styled.img`
   height: 40px;
 `;
 
-
-
-
-
-  
 const ProfileDeploy = ({user}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
@@ -81,20 +76,20 @@ const ProfileDeploy = ({user}) => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={()=> navigate("/cuenta")}>
-          <Avatar alt={user.email} src={null}/> My account
+          <Avatar alt={user.email} src={null}/> Mi Cuenta
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Configuraciones
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Cerrar Sesión
         </MenuItem>
       </Menu>
     </div>

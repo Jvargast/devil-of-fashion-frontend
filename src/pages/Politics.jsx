@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import ContentPolitics from '../components/ContentPolitics';
-import Footer from '../components/Footer';
 import Header from '../components/Store/Header/Header';
 import ReactPlayer from 'react-player';
 import Faq from '../components/FaQ/Faq';
 
 const Container = styled.div`
     background-color: #1D1D1B;
+    padding-top: 95px;
 
 
 `;
@@ -47,7 +47,7 @@ const Remember = styled.ul`
     display: flex;
     height: 50px;
     justify-content: center;
-    width: 1400px;
+    /* width: 1400px; */
     font-size: 35px;
 `;
 
@@ -128,7 +128,6 @@ const Politics = () => {
         </WashingProcess>
         <Faq/>
         <LastQuestion>¿Tienes otra pregunta? Escribenos en nuestro <a href='https://www.instagram.com/deviloffashion.store/'> Instagram</a></LastQuestion>
-        <Footer/>
     </Container>
   )
 }

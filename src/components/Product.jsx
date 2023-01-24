@@ -36,31 +36,31 @@ const AddtoCart = styled.div`
 
 const ImageContainer = styled.div`
   display: flex;
-  height: 320px;
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  width: 320px;
   padding: 8px;
+  height: 100%;
 
   &:hover ${AddtoCart} {
     opacity: 1;
   }
 `;
 
-const Circle = styled.div`
+/* const Circle = styled.div`
   width: 320px;
   height: 320px;
   border-radius: 50%;
   background-color: transparent;
   position: absolute;
 `;
-
+ */
 const Image = styled.img`
-  height: 100%;
   width: 100%;
+  aspect-ratio: 3/2;
+  /* mix-blend-mode: color-burn; */
   z-index: 2;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const Subtitle = styled.div`
@@ -106,8 +106,8 @@ const Product = ({ item }) => {
   return (
     <Container>
         <ImageContainer>
-          <Circle />
-          <div style={{width:"320px", height:"320px"}}>
+          {/* <Circle /> */}
+          <div style={{width:"100%", height:"60%", display:"grid"}}>
             <Image src={item.images[0].url} />
           </div>
           

@@ -158,7 +158,7 @@ export const instagram = [
 export const FaqQuestions = [
     {
         id: 1,
-        question:"¿Cuales son los valores de los envios?",
+        question:"¿Cuáles son los valores de los envios?",
         answer: "Si eres de Región, los envíos los maneja Starken según el peso de tu pedido y la ciudad en la que resides. Estos se harán x pagar cuando Starken entregue tu pedido. \nSi eres de Santiago, los envios tienen un valor de $3,000 con la excepción de las siguientes comunas: Colina, Lampa, Chicureo, Batuco, Padre Hurtado, Pirque. Noviciado, Las Vizcachas, Ciudad Satélite ($4,000) Calera de Tango, Peñaflor, Talagante, Buin, El Monte (4,500).",
 
     },
@@ -170,13 +170,13 @@ export const FaqQuestions = [
     },
         {
         id:3,
-        question:"¿Cuales son los cuidados de las prendas?",
+        question:"¿Cuáles son los cuidados de las prendas?",
         answer: "Para un mejor cuidado de tu prenda te recomendamos lavar esta a mano a temperatura baja evitando los sectores que contengan pintura. \nNO utilices el centrifugado ni la secadora en tu prenda ya que esta podría ser dañada. \nNO pongas calor directamente en tu prenda. Si es necesario plancharla porfavor evita los sectores que contengan pintura.",
 
     },
         {
         id:4,
-        question:"¿Como puedo hacer un pedido personalizado?",
+        question:"¿Cómo puedo hacer un pedido personalizado?",
         answer:"Puedes contactarnos directamente en nuestro Instagram o llenar nuestro formulario de cotización",
         enlace: "aquí."
 
@@ -188,18 +188,18 @@ export const FaqQuestions = [
     },
     {
         id:6,
-        question:"¿Cuales son los métodos de pago?",
+        question:"¿Cuáles son los métodos de pago?",
         answer:"Se puede pagar a través de transferencia bancaria y webpay, estas opciones te las daremos al momento de comprar la prenda que desees."
     },
     {
         id:7,
-        question:"¿Hacen envios a todo Chile?",
+        question:"¿Hacen envíos a todo Chile?",
         answer:"Hacemos envios vía Starken para regiones y por envios pyme para los pedidos dentro de Santiago."
 
     },
     {
         id:8,
-        question: "¿Hacen envios Internacionales?",
+        question: "¿Hacen envíos Internacionales?",
         answer:"Por el momento no estamos realizando envios internacionales pero esperamos que pronto podamos hacerlo.",
 
     }

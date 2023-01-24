@@ -1,224 +1,405 @@
-import React from 'react';
-import styled from 'styled-components';
-import {Link} from "react-router-dom";
-import df09 from '../assets/DF-09.png'
-import df11 from '../assets/DF-11.png';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import df from '../assets/Df_Logo_2.png';
-import {FaBars} from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import ProfileDeploy from './Store/Header/ProfileDeploy';
+import React from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import df09 from "../assets/DF-09.png";
+import df11 from "../assets/DF-11.png";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import df from "../assets/Df_Logo_2.png";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+/* import ProfileDeploy from "./Store/Header/ProfileDeploy"; */
 
-const Container = styled.div`
-    height:100px;
-    background-color: #000000;
-    flex-direction: row; 
-    z-index: 10;
-    width: 100%;
-    /* position: fixed; */
-`
-const Wrapper = styled.nav`
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
+const Container = styled.nav`
+  height: 100px;
+  background-color: #000000;
+  color: #fff;
+  z-index: 10;
+  width: 100%;
+  position: fixed;
+  box-shadow: 0px 5px 10px 0px #7c7b7b;
+  overflow: hidden;
+  @media (max-width: 1240px) {
+    .menu-items li {
+      padding: 0;
+      a {
+        font-size: 16px;
+        padding: 0;
+      }
+      ul {
+        li {
+          a {
+            img {
+              width: 20px;
+              height: 20px;
+            }
+            svg {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          div {
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    opacity: 0.95;
 
-`
-const Left = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: space-evenly;
+    .menu-items {
+      padding-top: 100px;
+      background: #000000;
+      height: 100vh;
+      /* max-width: 300px; */
+      width: 90%;
+      transform: translate(-150%);
+      display: flex;
+      flex-direction: column;
+      margin-left: -40px;
+      transition: transform 0.5s ease-in-out;
+      box-shadow: 5px 0px 10px 0px #aaa;
+      position: fixed;
+      align-items: flex-start;
+    }
+    .menu-items li {
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-left: -20px;
+      border-bottom: 1px solid #fff;
+      padding: 0 40px;
+      width: 80%;
+      a {
+        font-size: 25px;
+      }
+    }
+  }
+`;
 
-    @media screen and (max-width: 768px){
-        display: none;
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  /* height: 64px; */
+  [type="checkbox"],
+  .hamburger-lines {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    height: 84px;
+    display: block;
+    position: relative;
+    input[type="checkbox"],
+    .hamburger-lines {
+      display: block;
     }
 
-    
-`
-const Item = styled.span`
-    font-size: 24px;
-    cursor: pointer;
-    color: #e3e3e3;
-    margin-left: 40px;
-    /* text-decoration: underline 0.15em rgba(0, 0, 0, 0);
-    transition: text-decoration-color 300ms;
-    text-decoration-thickness: 0.1rem;
-    text-underline-offset: 5px; */
-    
-`
-
-const Center = styled.div`
-    text-align: center;
-    justify-content: center;
-    display: flex;
-`
-const Logo = styled.img`
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items:center;
-`
-
-const Right = styled.div`
-    flex: 1;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: flex-end;
-
-    @media screen and (max-width: 768px){
-        display: none;
+    input[type="checkbox"] {
+      position: absolute;
+      display: block;
+      height: 32px;
+      width: 30px;
+      top: 20px;
+      left: 20px;
+      z-index: 5;
+      opacity: 0;
     }
-`
+    input[type="checkbox"]:checked ~ .menu-items {
+      transform: translateX(0);
+    }
+    input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+      transform: rotate(35deg);
+    }
+    input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+      transform: scaleY(0);
+    }
+    input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+      transform: rotate(-35deg);
+    }
+    .hamburger-lines {
+      display: block;
+      height: 23px;
+      width: 35px;
+      position: absolute;
+      top: 34px;
+      left: 20px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hamburger-lines .line {
+      display: block;
+      height: 4px;
+      width: 100%;
+      border-radius: 10px;
+      background: #ffffff;
+    }
+    .hamburger-lines .line1 {
+      transform-origin: 0% 0%;
+      transition: transform 0.4s ease-in-out;
+    }
 
-const MenuContainer = styled.div`
+    .hamburger-lines .line2 {
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .hamburger-lines .line3 {
+      transform-origin: 0% 100%;
+      transition: transform 0.4s ease-in-out;
+    }
+  }
+
+  ul {
+    order: 2;
     display: flex;
-    flex-direction: row;
     align-items: center;
+  }
 
-`;
-const MenuItem = styled.div`
-    font-size: 24px;
-    /* width: 114px; */
-    cursor: pointer;
-    margin-right: 80px;
-    color: #e3e3e3;
-
+  h1 {
+    order: 1;
+    font-size: 2.3rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
-const MenuLogoContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+const Item = styled.li`
+  list-style: none;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  padding: 1.5rem;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 28px;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: #117964;
+      transition: color 0.3s ease-in-out;
+    }
+  }
+  &:nth-child(3) {
+    padding: 0;
+    a {
+      img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+    @media (max-width: 768px) {
+      display: none;
+      /* display: block; */
+      /* top: 30px;
+      left: 720px;
+      position: absolute;
+      border-bottom: 0;
+      z-index: 2; */
+    }
+    @media (max-width: 1240px) {
+      a {
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+  &:last-child {
+    padding: 0;
+    margin-left: 0;
+    list-style: none;
+    ul {
+      li {
+        list-style: none;
+        padding: 0 1rem;
+
+        a {
+          img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 `;
+
 const MenuLogo = styled.div`
-    cursor: pointer;
-    margin-left: 20px;
-    color: #e3e3e3;
-    width: 50px;
-    align-items: center;
+  cursor: pointer;
+  color: #e3e3e3;
+  width: 50px;
+  align-items: center;
 `;
 const ProfileIcon = styled.img`
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 `;
-
 const ShoppingBag = styled.img`
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 `;
 
 //REVISAR IMPLEMENTACIÓN
 const NavLink = styled(Link)`
-    color: #fff;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    padding: 0 1rem;
-    height: 100%;
-    cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
 
-    &.active {
-        border-bottom:3px solid #fff;
-    }
-    &:hover {
-        border-bottom:2px solid #fff;
-        
-    }
-`;
-//Responsive with bars
-const Bars = styled(FaBars)`
-    display: none;
-    color: #fff;
-
-    @media screen and (max-width: 768px) {
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(-100%, 75%);
-        font-size: 1.8rem;
-        cursor: pointer;
-    }
+  &.active {
+    border-bottom: 3px solid #fff;
+  }
+  &:hover {
+    border-bottom: 2px solid #fff;
+  }
 `;
 
 const ModalContainer = styled.div`
-    /* width: 200px; */
-    height: 100vh;
-    background-color: #000;
-    z-index: 30;
-    top: 0;
-    position: relative;
-    left: 1000px;
-    margin-top:-90px;
+  width: 600px;
+  height: 100vh;
+  background-color: #000;
+  z-index: 300;
+  top: 0;
+  position: fixed;
+  right: 0;
+`;
+
+const DropDownMenu = styled.div`
+  position: fixed;
+  top: 99px;
+  width: 300px;
+  right: 20px;
+  transform: translateX(-45%);
+  padding: 1rem;
+  background-color: #1d1d1d;
+  border: #ccc;
+  border-radius: 1px;
+  overflow: hidden;
+  z-index: 999;
+`;
+
+const DropdownItem = styled.div`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  /* transition: ; */
+  padding: 0.5rem;
+  cursor: pointer;
 `;
 
 const NavBar = () => {
-  const {isAuthenticated, user} = useSelector((state)=> state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const navigate = useNavigate();
 
-  
   const handleShopping = () => {
     setOpen(true);
-  }
+  };
+
   return (
     <Container>
-        <Bars/>
-        <Wrapper>
-            <Left>
-                <Item>
-                    <NavLink to="/">INICIO</NavLink>
-                </Item>
-                <Item>
-                    <NavLink to="/envios-y-politicas" >ENVÍOS Y POLITICAS</NavLink>
-                </Item>
-            </Left>
-            <Center>
-                <Logo src={df}/>
-            </Center>
-            <Right>
-                <MenuContainer>
-                    <MenuItem>
-                        <NavLink to="/tienda" >TIENDA</NavLink>
-                    </MenuItem>
-                    <MenuItem>
-                        <NavLink to="/a-pedido">APEDIDO</NavLink> 
-                    </MenuItem>
-                    </MenuContainer>
-                <MenuLogoContainer>
-                    {/*agregar desplegable para opciones usuario <MenuLogo>
-                        <a href='/cuenta'> 
-                            <ProfileIcon src={df09} />
-                        </a>
-                    </MenuLogo>*/}
-                    {isAuthenticated ? <>
-                    <ProfileDeploy user={user}/>
-                    </>:<MenuLogo>
-                        <a href='/iniciar-sesion'> 
-                            <ProfileIcon src={df09} />
-                        </a>
-                    </MenuLogo>}
-                    
-                    <MenuLogo>
-                        <InstagramIcon style={{fontSize:"40px"}}/>
-                    </MenuLogo>
-                    <MenuLogo>
-                        <ShoppingBag src={df11} onClick={handleShopping}/>
-                    </MenuLogo>
-                </MenuLogoContainer>
-            </Right>
-        </Wrapper>
-        {open ? <ModalContainer>
-            <CloseIcon style={{color:"white"}} onClick={()=> setOpen(false)}/>
-        </ModalContainer>:<></>}
-    </Container>
-  )
-}
+      <Wrapper>
+        <input type="checkbox" name="" id="" />
+        <div className="hamburger-lines">
+          <span className="line line1"></span>
+          <span className="line line2"></span>
+          <span className="line line3"></span>
+        </div>
+        <ul className="menu-items">
+          <Item>
+            <NavLink to="/">INICIO</NavLink>
+          </Item>
+          <Item>
+            <NavLink to="/envios-y-politicas">ENVÍOS Y POLITICAS</NavLink>
+          </Item>
+          <Item>
+            <a href="/">
+              <img src={df} alt="df" />
+            </a>
+          </Item>
+          <Item>
+            <NavLink to="/tienda">TIENDA</NavLink>
+          </Item>
+          <Item>
+            <NavLink to="/a-pedido">A PEDIDO</NavLink>
+          </Item>
+          <Item>
+            <ul>
+              <li>
+                {isAuthenticated ? (
+                  <div>
+                    <ProfileIcon
+                      src={df09}
+                      onClick={() => setOpenDropdown(!openDropdown)}
+                    />
+                    {openDropdown && (
+                      <DropDownMenu>
+                        <DropdownItem onClick={() => navigate("/perfil/me")}>
+                          Mi cuenta
+                        </DropdownItem>
+                        <DropdownItem>Ajustes</DropdownItem>
+                        <DropdownItem>Órdenes</DropdownItem>
+                        {user.role === "admin" ? (
+                          <DropdownItem>Dashboard</DropdownItem>
+                        ) : (
+                          <></>
+                        )}
+                        <DropdownItem>Cerrar sesión</DropdownItem>
+                      </DropDownMenu>
+                    )}
+                  </div>
+                ) : (
+                  <a href="/iniciar-sesion">
+                    <ProfileIcon src={df09} />
+                  </a>
+                )}
+              </li>
+              <li>
+                <a href="#insta">
+                  <InstagramIcon style={{ fontSize: "40px" }} />
+                </a>
+              </li>
+              <li>
+                <MenuLogo>
+                  <ShoppingBag src={df11} onClick={handleShopping} />
+                </MenuLogo>
+              </li>
+            </ul>
+          </Item>
+        </ul>
+      </Wrapper>
 
-export default NavBar
+      {open ? (
+        <ModalContainer>
+          <CloseIcon
+            style={{ color: "white" }}
+            onClick={() => setOpen(false)}
+          />
+        </ModalContainer>
+      ) : (
+        <></>
+      )}
+    </Container>
+  );
+};
+
+export default NavBar;

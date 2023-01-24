@@ -10,6 +10,7 @@ import Acoount from "./pages/Acoount";
 import {store} from './store/store';
 import { useEffect } from "react";
 import { loadUser } from "./actions/userActions";
+import Footer from "./components/Footer";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
       <Route path="/cuenta" element={<Acoount/>} />
       <Route path="/registro" element={<Register/>} />
     </Routes>
+    <Footer/>
   </Router>);
 };
 

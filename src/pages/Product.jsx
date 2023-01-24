@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Footer from "../components/Footer";
 import Header from "../components/Store/Header/Header";
 import CustomNavbar from "../components/Store/SecondNavbar/CustomNavbar";
 
@@ -13,7 +12,7 @@ import { useParams } from "react-router-dom";
 
 //Skeleton
 //Skeleton
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+//import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 //alerta
@@ -35,7 +34,7 @@ const Product = () => {
   //const [isValid, setIsValid] = useState('false');
   /* const { image } = product;
   const [index, setIndex] = useState(0); */
-  const { product, loading, error } = useSelector(
+  const { product, error } = useSelector(
     (state) => state.productDetails
   );
 
@@ -65,7 +64,6 @@ const Product = () => {
             <ProductsDetails />
           </Wrapper>
         </>
-      <Footer />
     </Container>
   );
 };

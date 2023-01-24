@@ -51,7 +51,7 @@ const CustomNavbar = ({category, subcategory, name}) => {
                 </IconContainer>
             </SingleRoute>
             <SingleRoute>
-                <LinkProduct to={`/tienda/${category}`}>
+                <LinkProduct to={`/tienda/${category}`} onClick={(e)=>e.preventDefault()}>
                     {category}
                 </LinkProduct>
                 <IconContainer>
@@ -59,7 +59,7 @@ const CustomNavbar = ({category, subcategory, name}) => {
                 </IconContainer>
                 </SingleRoute>
             <SingleRoute>
-                <LinkProduct to={`/tienda/${category}/${subcategory}`}>
+                <LinkProduct to={`/tienda/${category}/${subcategory}`} onClick={(e)=>e.preventDefault()}>
                     {subcategory}
                 </LinkProduct>
                 <IconContainer>
