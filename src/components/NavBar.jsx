@@ -5,9 +5,11 @@ import df09 from "../assets/DF-09.png";
 import df11 from "../assets/DF-11.png";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import df from "../assets/Df_Logo_2.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { logOut } from "../actions/userActions";
+import { useAlert } from "react-alert";
 /* import ProfileDeploy from "./Store/Header/ProfileDeploy"; */
 
 const Container = styled.nav`
@@ -247,6 +249,7 @@ const MenuLogo = styled.div`
 const ProfileIcon = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 const ShoppingBag = styled.img`
   width: 40px;
@@ -289,7 +292,7 @@ const DropDownMenu = styled.div`
   transform: translateX(-45%);
   padding: 1rem;
   background-color: #1d1d1d;
-  border: #ccc;
+  border: 1px solid #ccc;
   border-radius: 1px;
   overflow: hidden;
   z-index: 999;
@@ -310,9 +313,16 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
   const handleShopping = () => {
     setOpen(true);
+  };
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+    alert.success("Sesión cerrada con éxito");
   };
 
   return (
@@ -353,17 +363,17 @@ const NavBar = () => {
                     />
                     {openDropdown && (
                       <DropDownMenu>
-                        <DropdownItem onClick={() => navigate("/perfil/me")}>
+                        <DropdownItem onClick={() => navigate("/cuenta")}>
                           Mi cuenta
                         </DropdownItem>
-                        <DropdownItem>Ajustes</DropdownItem>
+                        <DropdownItem onClick={()=> navigate("/ajustes/perfil")}>Ajustes</DropdownItem>
                         <DropdownItem>Órdenes</DropdownItem>
                         {user.role === "admin" ? (
                           <DropdownItem>Dashboard</DropdownItem>
                         ) : (
                           <></>
                         )}
-                        <DropdownItem>Cerrar sesión</DropdownItem>
+                        <DropdownItem onClick={handleLogOut}>Cerrar sesión</DropdownItem>
                       </DropDownMenu>
                     )}
                   </div>

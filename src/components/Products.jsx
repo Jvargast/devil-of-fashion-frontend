@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { useAlert } from "react-alert";
-import Skeleton  from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
@@ -38,15 +39,15 @@ const PaginationBox = styled.div`
     cursor: pointer;
   }
   .page-item:first-child {
-  border-radius: 5px 0 0 5px;
-}
+    border-radius: 5px 0 0 5px;
+  }
 
-.page-item:last-child {
-  border-radius: 0 5px 5px 0;
-}
+  .page-item:last-child {
+    border-radius: 0 5px 5px 0;
+  }
 
   .page-link {
-    text-decoration: none; 
+    text-decoration: none;
     color: #e1251b;
     transition: all 0.3s;
   }
@@ -56,7 +57,7 @@ const PaginationBox = styled.div`
   }
 
   .page-item:hover .page-link {
-    color: rgb(80,80,80);
+    color: rgb(80, 80, 80);
   }
 
   .pageItemActive {
@@ -65,73 +66,79 @@ const PaginationBox = styled.div`
 `;
 
 const Products = ({ style, visible, limit, setCurrentPageNo, currentPage }) => {
-  
-
   //Pagination
-  const { loading, error, products, productsCount, resultPerPage } = useSelector(
-    (state) => state.products
-  );
+  const { loading, error, products, productsCount, resultPerPage } =
+    useSelector((state) => state.products);
   const alert = useAlert();
   const dispatch = useDispatch();
-  const {keyword} = useParams();
-
-  
+  const { keyword } = useParams();
 
   useEffect(() => {
-    if(error) {
+    if (error) {
       alert.error(error);
-      dispatch(clearErrors())
+      dispatch(clearErrors());
     }
-    dispatch(getProduct(keyword,currentPage, limit));
+    dispatch(getProduct(keyword, currentPage, limit));
   }, [alert, currentPage, dispatch, error, keyword, limit]);
 
   const Loader = () => {
     return (
       <Container
-          style={{
-            gridTemplateColumns: style ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
-            gridTemplateRows: style ? "repeat(3,1fr)" : "repeat(4,1fr)",
-          }}
-        >
-          {products &&
-            products.map((item, i) => <Skeleton item={item} key={i} height={320} width={320}/>)}
-        </Container>
-    )
-  }
+        style={{
+          gridTemplateColumns: style ? "repeat(3, 0.4fr)" : "repeat(4, 0.4fr)",
+          gridTemplateRows: style ? "" : "",
+        }}
+      >
+        {products &&
+          products.map((item, i) => (
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              <Skeleton
+                item={item}
+                key={i}
+                height={320}
+                style={{ marginTop: "30px", marginRight:"20px" }}
+              />
+            </SkeletonTheme>
+          ))}
+      </Container>
+    );
+  };
 
   return (
     <>
       {loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         <Container
           style={{
-            gridTemplateColumns: style ? "repeat(3, 0.4fr)" : "repeat(4, 0.4fr)",
+            gridTemplateColumns: style
+              ? "repeat(3, 0.4fr)"
+              : "repeat(4, 0.4fr)",
             gridTemplateRows: style ? "" : "",
           }}
         >
           {products &&
             products.map((item, i) => <Product item={item} key={i} />)}
-
-            
         </Container>
       )}
-      {resultPerPage &&  (<PaginationBox className="">
-              <Pagination 
-              activePage={currentPage}
-              itemsCountPerPage={resultPerPage}
-              totalItemsCount={productsCount}
-              onChange={setCurrentPageNo}
-              nextPageText="Next"
-              prevPageText="Prev"
-              firstPageText="Primera"
-              lastPageText="Última"
-              itemClass="page-item"
-              linkClass="page-link"
-              activeClass="pageItemActive"
-              activeLinkClass="pageLinkActive"
-              />
-            </PaginationBox>)}
+      {resultPerPage && (
+        <PaginationBox className="">
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={resultPerPage}
+            totalItemsCount={productsCount}
+            onChange={setCurrentPageNo}
+            nextPageText="Next"
+            prevPageText="Prev"
+            firstPageText="Primera"
+            lastPageText="Última"
+            itemClass="page-item"
+            linkClass="page-link"
+            activeClass="pageItemActive"
+            activeLinkClass="pageLinkActive"
+          />
+        </PaginationBox>
+      )}
     </>
   );
 };

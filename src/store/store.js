@@ -1,14 +1,15 @@
 import thunk from "redux-thunk";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { productDetailsReducer, productReducer } from "../reducers/productReducer";
-import { userReducer } from "../reducers/userReducer";
+import { profileReducer, userReducer } from "../reducers/userReducer";
 import { categoryReducer } from "../reducers/categoryReducer";
 
 const reducer = combineReducers({
     products: productReducer,
     productDetails: productDetailsReducer,
     user: userReducer,
-    categories: categoryReducer
+    categories: categoryReducer,
+    profile:profileReducer
 });
 
 let initialState = {};

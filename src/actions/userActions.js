@@ -12,6 +12,12 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILED,
+  UPDATE_PASSWORD_FAILED,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
 } from "../constants/userConstants";
 
 export const login = (email, password) => async (dispatch) => {
@@ -64,6 +70,42 @@ export const logOut = () => async (dispatch) => {
     dispatch({ type: LOGOUT_FAILED, payload: error.response.data.message });
   }
 };
+
+//Update Profile
+export const updateProfile = (name, email) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.put(`/api/v1/me/update`, {name,email}, config);
+
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PROFILE_FAILED,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Update Profile
+export const updatePassword = (oldPassword,newPassword, confirmPassword) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PASSWORD_REQUEST });
+  
+      const config = { headers: { "Content-Type": "application/json" } };
+  
+      const { data } = await axios.put(`/api/v1/password/update`, {oldPassword, newPassword, confirmPassword}, config);
+
+      dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.success });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PASSWORD_FAILED,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 //Clearin errors
 export const clearErrors = () => async (dispath) => {
