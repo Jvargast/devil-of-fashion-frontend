@@ -76,32 +76,40 @@ const Button = styled.button`
 `;
 
 const Redirect = styled.div`
-    display: flex;
-    justify-content: center;
-    font-size: 22px;
-    width: 100%;
-    margin-top: ${v.smSpacing};
+  display: flex;
+  justify-content: center;
+  font-size: 22px;
+  width: 100%;
+  margin-top: ${v.smSpacing};
 `;
 
 const RedirectLabel = styled.span`
-    color: gray;
+  color: gray;
 `;
 
 const RedirectLink = styled(Link)`
-    color: #fff;
-`; 
+  color: #fff;
+`;
 
 const prepareForm = (formArry) => {
   return formArry.reduce((r, v) => ({ ...r, [v.name]: "" }), {});
 };
 
-const Form = ({ title, formArry, submitBtn, onSubmit, redirect }) => {
+const Form = ({
+  title,
+  formArry,
+  submitBtn,
+  onSubmit,
+  redirect,
+  forgotPassword,
+}) => {
   const initialForm = prepareForm(formArry);
   const [form, setForm] = useState(prepareForm(formArry));
   const onChangehandler = (e) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
   const onSumbitHandler = () => onSubmit(form, () => setForm(initialForm));
   const hasRedirect = !!redirect;
+  const hasForgotPassword = !!forgotPassword;
 
   return (
     <Container>
@@ -130,10 +138,21 @@ const Form = ({ title, formArry, submitBtn, onSubmit, redirect }) => {
         >
           {submitBtn}
         </Button>
-        {hasRedirect && (<Redirect>
+        {hasRedirect && (
+          <Redirect>
             <RedirectLabel>{redirect.label}&nbsp;</RedirectLabel>
-            <RedirectLink to={redirect.link.to}>{redirect.link.label}</RedirectLink>
-        </Redirect>)}
+            <RedirectLink to={redirect.link.to}>
+              {redirect.link.label}
+            </RedirectLink>
+          </Redirect>
+        )}
+        {hasForgotPassword && (
+          <Redirect>
+            <RedirectLink to={forgotPassword.link.to}>
+              {forgotPassword.label}
+            </RedirectLink>
+          </Redirect>
+        )}
       </Wrapper>
     </Container>
   );
@@ -159,6 +178,12 @@ Form.defaultProps = {
     link: {
       label: "Aquí",
       to: "/login",
+    },
+  },
+  forgotPassword: {
+    label: "¿Olvidaste tu contraseña?",
+    link: {
+      to: "/password/forgot",
     },
   },
 };

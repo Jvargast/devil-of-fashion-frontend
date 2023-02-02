@@ -1,7 +1,7 @@
 import thunk from "redux-thunk";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { productDetailsReducer, productReducer } from "../reducers/productReducer";
-import { profileReducer, userReducer } from "../reducers/userReducer";
+import { forgotPasswordReducer, profileReducer, userReducer } from "../reducers/userReducer";
 import { categoryReducer } from "../reducers/categoryReducer";
 
 const reducer = combineReducers({
@@ -9,7 +9,8 @@ const reducer = combineReducers({
     productDetails: productDetailsReducer,
     user: userReducer,
     categories: categoryReducer,
-    profile:profileReducer
+    profile:profileReducer,
+    forgotPassword: forgotPasswordReducer,
 });
 
 let initialState = {};

@@ -12,9 +12,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const { error, isAuthenticated } = useSelector(
-    (state) => state.user
-  );
+  const { error, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,6 +44,12 @@ const Login = () => {
             link: {
               label: "aquí",
               to: "/registro",
+            },
+          }}
+          forgotPassword={{
+            label: "¿Olvidaste tu contraseña?",
+            link: {
+              to: "/password/forgot",
             },
           }}
         />
