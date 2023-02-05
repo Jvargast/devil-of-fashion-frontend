@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+/* import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove"; */
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Thumbs from "./Thumbs";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProductDetails } from "../../../actions/productActions";
+import {
+  clearErrors,
+  getProductDetails,
+} from "../../../actions/productActions";
 import { useParams } from "react-router-dom";
 
 //Skeleton
@@ -16,23 +19,26 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 //alerta
 import { useAlert } from "react-alert";
+import { addItemsToCart } from "../../../actions/cartActions";
 
 const InfoContainer = styled.div`
-  width: 800px;
+  width: 60%;
   padding: 0px 50px;
 `;
 
 const ImgWrapper = styled.div`
   /* overflow: hidden; */
+  width: 40%;
 `;
 
 const Second = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
 `;
 
 const ImgContainer = styled.div`
-  width: 500px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -56,17 +62,17 @@ const Image = styled.img`
 
 const Title = styled.h1`
   color: #fff;
-  font-size: 60px;
+  font-size: 80px;
 `;
 const SubTitle = styled.p`
   color: #fff;
   margin: 20px 0px;
-  font-size: 30px;
+  font-size: 45px;
 `;
 
 const Price = styled.span`
   color: #fff;
-  font-size: 40px;
+  font-size: 60px;
 `;
 
 const FilterContainer = styled.div`
@@ -81,7 +87,7 @@ const Filter = styled.div`
 
 const FilterTitle = styled.div`
   color: #fff;
-  font-size: 20px;
+  font-size: 40px;
 `;
 
 const FilterSize = styled.select`
@@ -91,6 +97,7 @@ const FilterSize = styled.select`
   background-color: #000000;
   border: 0;
   color: #fff;
+  font-size: 30px;
 `;
 
 const FilterSizeOption = styled.option`
@@ -99,18 +106,20 @@ const FilterSizeOption = styled.option`
 
 const AddContainer = styled.div`
   display: flex;
-  width: 80%;
+  width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-right: 2rem;
+  column-gap: 3rem;
 `;
 
-const AmountContainer = styled.div`
+/* const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   color: #fff;
 `;
 
-const Amount = styled.span`
+const Amount = styled.input`
   width: 30px;
   height: 30px;
   border-radius: 10px;
@@ -119,7 +128,7 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
-`;
+`; */
 
 const Button = styled.button`
   background-color: #000000;
@@ -127,21 +136,22 @@ const Button = styled.button`
   border-radius: 10px;
   border: 1px solid #000000;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  height: 35px;
-  width: 170px;
-  padding: 5px;
+  font-size: 30px;
+  padding: 15px 50px;
+  cursor: pointer;
+
   &:hover {
     background-color: gray;
   }
 `;
 const BackContainer = styled.div`
-  width: 100%;
+  width: 75%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 const BackToStore = styled.button`
   background-color: transparent;
@@ -149,6 +159,7 @@ const BackToStore = styled.button`
   border-bottom: 1px solid #fff;
   color: #fff;
   cursor: pointer;
+  font-size: 20px;
 `;
 
 const ProductsDetails = (props) => {
@@ -159,18 +170,19 @@ const ProductsDetails = (props) => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
+  //ADD TO CART
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(id, 1));
+    alert.success("Item agregado éxitosamente")
+  }
 
   useEffect(() => {
-    if(error) {
+    if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     dispatch(getProductDetails(id));
   }, [alert, dispatch, error, id]);
-
-  
-
-  
 
   const [index, setIndex] = useState(0);
   const myRef = useRef(null);
@@ -179,6 +191,19 @@ const ProductsDetails = (props) => {
     setIndex(index);
   };
 
+  //Function for decrease or increased product
+/*   const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) return;
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+  const decreaseQuantity = () => {
+    if (1 >= quantity) return;
+    const qty = quantity - 1;
+    setQuantity(qty);
+  }; */
   //Skeleton
   const Loader = () => {
     return (
@@ -261,13 +286,17 @@ const ProductsDetails = (props) => {
               )}
             </p>
             <AddContainer>
-              <AmountContainer>
-                <RemoveIcon />
-                <Amount> 1</Amount>
-                <AddIcon />
-              </AmountContainer>
+              {/* <AmountContainer>
+                <button onClick={decreaseQuantity}>
+                  <RemoveIcon />
+                </button>
+                <Amount type="number" value={quantity} readOnly />
+                <button onClick={increaseQuantity}>
+                  <AddIcon />
+                </button>
+              </AmountContainer> */}
 
-              <Button>
+              <Button onClick={addToCartHandler}>
                 <ShoppingBagIcon />
                 Añadir al carro
               </Button>

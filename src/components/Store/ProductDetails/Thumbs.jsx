@@ -5,19 +5,25 @@ import styled from 'styled-components';
 const RestOfImages = styled.div`
   display: flex;
   flex-direction: row;
-  width: 520px;
+  width: 100%;
 `;
 
 const Images = styled.img`
-  width: 160px !important;
+  width: calc(100% / 3) !important;
   height: 200px !important;
-  margin-right: 10px;
   margin-top: 10px;
   object-fit: cover;
   cursor: pointer;
   display: block;
   transition: 0.1s linear;
   opacity: 0.7;
+
+  :nth-child(3) {
+    margin-left: 5px;
+  }
+  :nth-child(1) {
+    margin-right: 5px;
+  }
   
   &:active {
     opacity: 1;

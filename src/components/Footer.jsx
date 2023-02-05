@@ -68,7 +68,9 @@ const ItemContainer = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
-    margin-right: 120px;
+    :nth-child(1) {
+        margin-right: 120px;
+    }
 
     @media screen and (max-width: 768px){
         margin-right: 10px;
@@ -98,7 +100,7 @@ const Right = styled.div`
 
 const SocialContainer =  styled.div`
     display: flex;
-    width: 619px;
+    width: 100%;
     justify-content: flex-end;
     align-items: center;
     padding: 10px;

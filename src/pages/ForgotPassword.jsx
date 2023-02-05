@@ -43,6 +43,7 @@ const Title = styled.div`
   font-size: 3rem;
   display: flex;
   justify-content: center;
+  margin-bottom: 3rem;
 `;
 const Input = styled.input`
   background-color: #000000;
@@ -50,7 +51,7 @@ const Input = styled.input`
   border-radius: 5px;
   height: 70px;
   margin-bottom: 20px;
-  width: 600px;
+  width: 100%;
   color: #fff;
   font-size: 30px;
 `;
@@ -59,6 +60,11 @@ const Forms = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
+  width: 50%;
+
+  label {
+    font-size: 1.8rem;
+  }
 `;
 
 const Button = styled.button`
@@ -67,7 +73,7 @@ const Button = styled.button`
   border-color: #000000;
   background-color: #000000;
   color: #fff;
-  padding: 10px 10px;
+  padding: 10px 20px;
   border-radius: 50px;
   font-size: 20px;
   cursor: pointer;
@@ -81,6 +87,12 @@ const LinkS = styled(Link)`
     color: #e1251b;
     border-bottom: 2px solid #808080;
   }
+`;
+
+const Warning = styled.span`
+    font-size: 1.8rem;
+    color: ${(props) => (props.email ? "" : "#e1251b")};
+    display: ${(props) => (props.email ? "none":"")};
 `;
 
 const ForgotPassword = () => {
@@ -116,21 +128,19 @@ const ForgotPassword = () => {
         <Data>
           <User>
             <Title>¿Tienes problemas para iniciar sesión?</Title>
-
-            <p style={{ color: "#fff", padding: "3rem", fontSize: "1rem" }}>
-              Ingresa tu correo electrónico y te enviaremos un enlace para que
-              recuperes el acceso a tu cuenta.
-            </p>
             <Forms>
+              <label>Correo electrónico <Warning email={email}>*</Warning></label>
               <Input
                 id={email}
                 name={email}
                 type="text"
                 value={email}
-                placeholder="Correo electrónico"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Forms>
+            <p style={{ color: "#ffffffa3", fontSize: "1.5rem", marginBottom:"3rem" }}>
+              Te enviaremos un link a tu correo para que puedas crear tu nueva contraseña.
+            </p>
             {loading ? (
               <PacmanLoader color="#e1251b"/>
             ) : (

@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import df09 from "../assets/DF-09.png";
-import df11 from "../assets/DF-11.png";
+import df11 from "../assets/shopping-bag-df.svg";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import df from "../assets/Df_Logo_2.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { logOut } from "../actions/userActions";
 import { useAlert } from "react-alert";
+import SidebarProducts from "./SidebarProducts";
 /* import ProfileDeploy from "./Store/Header/ProfileDeploy"; */
 
 const Container = styled.nav`
@@ -187,7 +187,7 @@ const Item = styled.li`
     transition: color 0.3s ease-in-out;
 
     &:hover {
-      color: #117964;
+      color: #e1251b;
       transition: color 0.3s ease-in-out;
     }
   }
@@ -243,7 +243,7 @@ const Item = styled.li`
 const MenuLogo = styled.div`
   cursor: pointer;
   color: #e3e3e3;
-  width: 50px;
+  width: 100%;
   align-items: center;
 `;
 const ProfileIcon = styled.img`
@@ -252,8 +252,14 @@ const ProfileIcon = styled.img`
   cursor: pointer;
 `;
 const ShoppingBag = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 0.5rem;
+  filter: invert(100%) sepia(96%) saturate(1%) hue-rotate(51deg)
+    brightness(104%) contrast(100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 //REVISAR IMPLEMENTACIÓN
@@ -272,16 +278,6 @@ const NavLink = styled(Link)`
   &:hover {
     border-bottom: 2px solid #fff;
   }
-`;
-
-const ModalContainer = styled.div`
-  width: 600px;
-  height: 100vh;
-  background-color: #000;
-  z-index: 300;
-  top: 0;
-  position: fixed;
-  right: 0;
 `;
 
 const DropDownMenu = styled.div`
@@ -310,13 +306,15 @@ const DropdownItem = styled.div`
 
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const alert = useAlert();
 
-  const handleShopping = () => {
+  const handleShopping = (e) => {
+    e.preventDefault();
     setOpen(true);
   };
 
@@ -366,14 +364,20 @@ const NavBar = () => {
                         <DropdownItem onClick={() => navigate("/cuenta")}>
                           Mi cuenta
                         </DropdownItem>
-                        <DropdownItem onClick={()=> navigate("/ajustes/perfil")}>Ajustes</DropdownItem>
+                        <DropdownItem
+                          onClick={() => navigate("/ajustes/perfil")}
+                        >
+                          Ajustes
+                        </DropdownItem>
                         <DropdownItem>Órdenes</DropdownItem>
                         {user.role === "admin" ? (
                           <DropdownItem>Dashboard</DropdownItem>
                         ) : (
                           <></>
                         )}
-                        <DropdownItem onClick={handleLogOut}>Cerrar sesión</DropdownItem>
+                        <DropdownItem onClick={handleLogOut}>
+                          Cerrar sesión
+                        </DropdownItem>
                       </DropDownMenu>
                     )}
                   </div>
@@ -390,21 +394,18 @@ const NavBar = () => {
               </li>
               <li>
                 <MenuLogo>
-                  <ShoppingBag src={df11} onClick={handleShopping} />
+                  <div style={{position:"relative",}}>
+                    <ShoppingBag src={df11} onClick={handleShopping} />
+                    <p style={{position:"absolute", top:"-2px", right:"-2px"}}>{cartItems.length===0 ? "":cartItems.length}</p>
+                  </div>
                 </MenuLogo>
               </li>
             </ul>
           </Item>
         </ul>
       </Wrapper>
-
       {open ? (
-        <ModalContainer>
-          <CloseIcon
-            style={{ color: "white" }}
-            onClick={() => setOpen(false)}
-          />
-        </ModalContainer>
+        <SidebarProducts setOpen={setOpen} cartItems={cartItems} />
       ) : (
         <></>
       )}

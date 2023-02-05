@@ -17,9 +17,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 //alerta
 import { useAlert } from "react-alert";
+import RelatedProducts from "../components/Store/Items/RelatedProducts";
 
 const Container = styled.div`
   background-color: #1d1d1b;
+  padding-top: 100px;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -63,6 +66,7 @@ const Product = () => {
           <Wrapper>
             <ProductsDetails />
           </Wrapper>
+          <RelatedProducts/>
         </>
     </Container>
   );
