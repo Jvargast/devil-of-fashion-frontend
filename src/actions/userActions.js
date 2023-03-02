@@ -44,12 +44,12 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const register = (userData) => async (dispatch) => {
+export const register = (name,email,password) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.post("/api/v1/register", { userData }, config);
+    const { data } = await axios.post("/api/v1/registro", { name, email, password }, config);
     dispatch({ type: REGISTER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: REGISTER_FAIL, payload: error.response.data.message });

@@ -103,9 +103,13 @@ export const Label = styled.label`
 `;
 
 export const ButtonContainer = styled.div`
-display: flex;
-justify-content: center;
-/* width: 50%;
+  display: flex;
+  justify-content: center;
+
+  button {
+    cursor: pointer;
+  }
+  /* width: 50%;
 border: none;
 border-color: #000000;
 background-color: #000000;
@@ -118,14 +122,10 @@ font-size: 30px; */
 export const Redirect = styled.p`
   color: #fff;
   padding-bottom: 10px;
-
-
-
-
 `;
 
 export const RedirectLink = styled(Link)`
-text-decoration: none;
-    border-bottom: 1px solid gray;
-    color: gray;
+  text-decoration: none;
+  border-bottom: 1px solid gray;
+  color: gray;
 `;

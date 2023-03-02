@@ -2,9 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ItemCart from "../components/CartComponent/ItemCart";
+import PaymentComplete from "../components/CartComponent/PaymentComplete";
 import CheckoutStep from "../components/Stepper/CheckoutStep";
-/* import StepNavigation from "../components/Stepper/StepNavigation"; */
 import Header from "../components/Store/Header/Header";
 import "./../components/Stepper/Step.css";
 
@@ -36,44 +35,46 @@ const Content = styled.div`
 `;
 
 const NotAccount = styled.div`
-    background: #000;
-    font-size: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 2rem 0rem;
+  background: #000;
+  font-size: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2rem 0rem;
 `;
 
 const LinkS = styled(Link)`
-    text-decoration: none;
-    padding-left: 0.8rem;
-    color:inherit;
-    border-bottom: 1px solid #000;
-    :hover{
-        border-bottom: 1px solid white;
-    }
+  text-decoration: none;
+  padding-left: 0.8rem;
+  color: inherit;
+  border-bottom: 1px solid #000;
+  :hover {
+    border-bottom: 1px solid white;
+  }
 `;
 
-const Cart = () => {
-  
+const ConfirmPayment = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
-
   return (
     <Container>
       <Header title="FINALIZAR COMPRA" />
       <SecondContainer>
         <Title></Title>
-        <CheckoutStep activeStep={0}/>
+        <CheckoutStep activeStep={2} />
         <Content>
-          
-          {!isAuthenticated && <NotAccount>¿Aún no tienes una cuenta? <LinkS to="/registro"> Registrate aquí</LinkS></NotAccount>}  
-          <ItemCart cartItems={cartItems}/>
+          {!isAuthenticated && (
+            <NotAccount>
+              ¿Aún no tienes una cuenta?{" "}
+              <LinkS to="/registro"> Registrate aquí</LinkS>
+            </NotAccount>
+          )}
+          <PaymentComplete cartItems={cartItems} />
         </Content>
       </SecondContainer>
     </Container>
   );
 };
 
-export default Cart;
+export default ConfirmPayment;

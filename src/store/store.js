@@ -12,7 +12,8 @@ const reducer = combineReducers({
     categories: categoryReducer,
     profile:profileReducer,
     forgotPassword: forgotPasswordReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    
 });
 
 let initialState = {

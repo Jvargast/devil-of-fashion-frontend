@@ -7,13 +7,16 @@ import Form from "../components/Form/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login } from "../actions/userActions";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { error, isAuthenticated } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  let location = useLocation();
+
+  const redirect = location.search ? location.search.split("=")[1] : "cuenta";
 
   useEffect(() => {
     if (error) {
@@ -21,9 +24,9 @@ const Login = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate("/cuenta");
+      navigate(`/${redirect}`);
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate]);
+  }, [dispatch, error, alert, isAuthenticated, navigate, redirect]);
 
   const onSubmitHandler = (form, callback, e) => {
     /* e.preventDefault(); */

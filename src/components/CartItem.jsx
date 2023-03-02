@@ -5,7 +5,7 @@ import styled from "styled-components";
 const CartItemCard = styled.div`
   display: flex;
   align-items: flex-start;
-  padding: 1vmax;
+  /* padding: 1vmax; */
   /* height: 8vmax; */
   height: 100%;
   box-sizing: border-box;

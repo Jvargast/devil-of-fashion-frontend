@@ -17,6 +17,8 @@ import Security from "./components/User/Security";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
+import Payment from "./pages/Payment";
+import ConfirmPayment from "./pages/ConfirmPayment";
 
 const App = () => {
   useEffect(() => {
@@ -40,7 +42,9 @@ const App = () => {
         <Route path="/registro" element={<Register />} />
         <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/carro" element={<Cart />} />
+        <Route path="/orden/pago" element={<Payment />} />
+        <Route path="/orden/confirmar" element={<ConfirmPayment />} />
       </Routes>
       {/* Falta arreglar footer */}
       <Footer />

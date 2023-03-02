@@ -121,7 +121,7 @@ const Security = () => {
     if (isUpdated) {
       alert.success("Contraseña actualizada correctamente");
 
-      navigate("/cuenta");
+      navigate("/account");
 
       dispatch({
         type: UPDATE_PASSWORD_RESET,

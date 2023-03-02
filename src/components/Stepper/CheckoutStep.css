@@ -1,0 +1,30 @@
+.MuiStepConnector-line {
+    display: none !important;
+  }
+  
+  .MuiStepConnector-root {
+    height: 4px;
+    background-color: black;
+    color: white;
+  }
+  
+  .MuiStepConnector-active,
+  .MuiStepConnector-completed {
+    background-color: tomato;
+  }
+
+.MuiStepIcon-root.Mui-active {
+    filter: invert(100%) sepia(96%) saturate(1%) hue-rotate(51deg)
+    brightness(104%) contrast(100%);
+    color: inherit;
+  }
+
+.MuiStepIcon-root {
+    font-size: 40px !important;
+    /* filter: invert(18%) sepia(59%) saturate(6568%) hue-rotate(356deg) brightness(94%) contrast(86%); */
+    color: black !important;
+}
+
+.MuiStepIcon-text {
+    color: red;
+}

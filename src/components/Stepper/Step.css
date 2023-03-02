@@ -1,0 +1,103 @@
+.circle {
+    width: 40px;
+    height: 40px;
+    line-height: 25px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+    color: gray;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+  }
+  
+  .stepWrapper {
+    display: flex;
+    margin-bottom: 20px;
+    width: 80%;
+    justify-content: space-around;
+  }
+
+  .stepBlock:not(:last-child) {
+    width: 100%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+  }
+  .stepBlock:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stepBlock:last-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stepBlock >span{
+    color: gray;
+  }
+  .stepBlock.selected>span{
+    color: white;
+  }
+  
+  .stepBlock:not(:nth-child(2)) > .circleWrapper{
+    padding: 0px 20px;
+
+  }
+  .stepBlock:last-child > .circleWrapper{
+    padding-right: 78px;
+
+  }
+  .stepBlock .circleWrapper{
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .selected .circle {
+    color: white;
+    background-color: black;
+    border-color: black;
+  }
+  
+  .stepBlock:not(:last-child) > .circleWrapper::after {
+    content: '';
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    background-color: black;
+    margin: auto;
+    z-index: 0;
+  }
+  
+  .stepBlock:not(:last-child) > .circleWrapper::after {
+    height: 3px;
+  }
+  
+  .stepBlock:not(:last-child).selected > .circleWrapper::after, .stepBlock:not(:last-child).selected ~ .stepBlock:not(:last-child) > .circleWrapper::after {
+    height: 4px;
+    opacity: 0.6;
+    padding-right: 20px;
+  }
+  
+  .primaryButton {
+    padding: 10px 25px;
+    background-color: #1d1d1b;
+    border: none;
+    margin: 10px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .primaryButton:disabled {
+    opacity: 0.5;
+  }

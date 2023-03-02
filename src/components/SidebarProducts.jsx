@@ -73,7 +73,7 @@ const SidebarProducts = ({ setOpen, cartItems }) => {
     dispatch(removeItemsFromCart(id));
   };
   const checkoutHandler = () => {
-    navigate("/login?redirect=shipping");
+    navigate("/iniciar-sesion?redirect=shipping");
   };
 
   return (
@@ -137,7 +137,7 @@ const SidebarProducts = ({ setOpen, cartItems }) => {
               justifyContent: "space-around",
             }}
           >
-            <Button>VER CARRITO</Button>
+            <Button onClick={()=>navigate("/carro")}>VER CARRITO</Button>
             <Button onClick={checkoutHandler}>FINALIZAR COMPRA</Button>
           </div>
         </div>
